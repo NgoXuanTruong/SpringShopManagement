@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="/admin/shared/layout::dynamic(~{::view})">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<div th:fragment="view">
+    <div class="alert alert-secondary">
+     PRODUCT MANAGEMENT
+     <i class="float-end text-danger" th:text=${message}></i> 
+    </div>
+	<div>
+		<ul class="nav nav-justified mb-3">
+			  <li th:each="c: ${categories}" th:class="@{|nav-item ${session.cid == c.id ? 'bg-warning' : 'bg-light'}|}">
+			    <a th:href="@{|/admin/product/category/${c.id}|}" th:text="${c.nameVn}" class="nav-link" href="#">
+            		<b class="badge bg-dark" th:text="${c.products.size()}"></b>
+            		<br>
+				    <span th:text="${c.name}" style="font-variant: small-caps; color: white;"></span>
+          </a>
+			  </li>
+			</ul>
+	</div>
+    <!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a th:classappend="${edit?'active':''}" class="nav-link " data-bs-toggle="tab" href="#edit">
+        <i class="bx bxs-edit"></i>EDIT PRODUCT
+      </a>
+    </li>
+    <li class="nav-item">
+      <a  th:classappend="${edit?'':'active'}" class="nav-link " data-bs-toggle="tab" href="#list">
+        <i class="bx bx-list-ol"></i> LIST OF PRODUCTS
+      </a>
+    </li>
+  </ul>
+  
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div th:classappend="${edit?'active':'fade'}" class="tab-pane" id="edit">
+        <div th:replace="/admin/product/_form"></div>
+    </div>
+    <div th:classappend="${edit? 'fade':'active'}" class="tab-pane" id="list">
+        
+            <div th:replace="/admin/product/_table"></div>
+        </div>
+    </div>
+  </div>
+   
+</html>
